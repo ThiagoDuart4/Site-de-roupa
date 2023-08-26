@@ -7,3 +7,9 @@
     box-sizing: border-box;
 }
 
+:root {
+  --corFundo : #D9D9D9;
+  --corInput: #D9D9D9;
+  --Bordered : border : 1px solid red;
+}
+
