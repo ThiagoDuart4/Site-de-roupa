@@ -1,0 +1,77 @@
+.cadastre {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+
+}
+
+.cadastre section {
+    width: 50%;
+    height: 100vh;
+
+}
+
+.imageCreateLogin {
+    background-color:var(--corFundo)
+}
+
+
+/* FORMULARIO */
+.createLogin {
+
+    display: flex;
+    align-items:center ;
+    justify-content: center;
+  
+}
+
+.createLoginInfo{
+
+     width: 90%;
+     height: 90vh;
+}
+
+.createLoginInfo h1{
+ font-size: 2.5em;
+ font-weight:600;
+}
+
+.createLoginForm{
+    
+    margin: 50px 50px;
+}
+
+.createLoginInfo .createLoginForm label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    margin-bottom: 35px;
+}
+
+.createLoginInfo .createLoginForm  label input , .createLoginInfo .createLoginForm  input[type="submit"]{
+    width: 85%;
+    height: 50px;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    background-color: var(--corInputs);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.createLoginInfo .createLoginForm  label input{
+   
+    font-size: 1em;
+    padding-left: 15px;
+    margin-top: 5px;
+}
+
+
+.createLoginInfo .createLoginForm input[type="submit"]{
+    font-weight: 600;
+    cursor:  pointer;
+    margin-bottom: 20px;
+}
+
+.createLoginInfo .createLoginForm input[type="submit"]:hover{
+opacity: 0.8;
+transition: 0.4s;
+}
