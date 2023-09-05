@@ -1,25 +1,52 @@
 import React from 'react'
 import style from '../login/login.module.css'
 import {Link } from "react-router-dom";
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { FcGoogle } from 'react-icons/fc';
+
+import { useAuthentication } from '../../hooks/useAuthentication'
+
 
 const Login = () => {
 
   const [email,setEmail] = useState('');
   const [senha,setSenha] = useState('');
+  const [error,setError] = useState()
+
+
+  const navigate = useNavigate()
+
+  const {login, error: authError , loading,redirect} = useAuthentication()
 
 
 
-   const handleSubmit = (e) =>{
+   const handleSubmit =  async(e) =>{
     e.preventDefault();
+
+    setError('')
+  
     const user = {
       email,
       senha
     }
 
+
+    const res = await login(user)
+
+    if(redirect === true){
+      navigate("./home")
+    }
    }
+
+   useEffect(()=>{
+    if(authError){
+      setError(authError)
+    }
+  })
+
+   
   return (
     <div className={style.login}>
       <section className={style.image}>
@@ -47,13 +74,13 @@ const Login = () => {
               type="password" 
               name='senha' 
               required
-              value={email} 
+              value={senha} 
                onChange={(e)=>{setSenha(e.target.value)}}/>
             </label>
             <hr/>
             <input type="submit" value="Logar" name='logar' />
          </form>
-
+         {error && <p>{error}</p>}
           <p>Não tem uma conta?<span><Link to ='/cadastrar'>Crie uma</Link></span></p>
           <p>Esqueci minha senha</p>
     <div className={style.SocialBtn}>

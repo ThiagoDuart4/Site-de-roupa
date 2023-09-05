@@ -4,6 +4,7 @@ import style from '../CreateLogin/createLogin.module.css'
 import { useState } from 'react'
 import { useAuthentication } from '../../hooks/useAuthentication'
 
+
 const CreateLogin = () => {
 
   const [name,setName] = useState('')
@@ -12,7 +13,8 @@ const CreateLogin = () => {
   const [ConfirmPassword,setConfirmPassword] = useState('')
  const [error,setError] = useState()
 
-  const {createUser, error: authError , loading} = useAuthentication()
+  const {createUser, error: authError , loading,msg} = useAuthentication()
+
 
 const handleSubmit = async (e) =>{
  e.preventDefault()
@@ -31,8 +33,8 @@ const handleSubmit = async (e) =>{
   return
  }
 
+
   const res = await createUser(user)
- console.log(res)
 
 }
 
@@ -85,6 +87,7 @@ useEffect(()=>{
            {!loading &&   <input type="submit" value= "Enviar" />}
            {loading &&   <input type="submit" value= "Aguarde.." disable />}
               {error && <p>{error}</p>}
+              {msg && <p>{msg}</p>}
             </form>
 </div>
          
