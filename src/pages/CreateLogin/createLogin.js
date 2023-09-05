@@ -3,7 +3,7 @@ import style from '../CreateLogin/createLogin.module.css'
 
 import { useState } from 'react'
 import { useAuthentication } from '../../hooks/useAuthentication'
-
+import { useNavigate } from 'react-router-dom'
 
 const CreateLogin = () => {
 
@@ -13,8 +13,9 @@ const CreateLogin = () => {
   const [ConfirmPassword,setConfirmPassword] = useState('')
  const [error,setError] = useState()
 
-  const {createUser, error: authError , loading,msg} = useAuthentication()
+  const {createUser, error: authError , loading,msg,redirect} = useAuthentication()
 
+  const navigate = useNavigate()
 
 const handleSubmit = async (e) =>{
  e.preventDefault()
@@ -37,6 +38,17 @@ const handleSubmit = async (e) =>{
   const res = await createUser(user)
 
 }
+
+// REDIRENCIONANDO USUARIO APOS A CRIAÇÃO DO USUARIO
+
+
+useEffect(()=>{
+  if (redirect === true) {
+    navigate("/home")
+  }
+ },[redirect])
+
+
 
 useEffect(()=>{
   if(authError){

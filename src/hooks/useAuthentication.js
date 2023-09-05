@@ -6,7 +6,7 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     updateProfile,
-    signOut
+    signOut, GoogleAuthProvider, signInWithPopup
 } from 'firebase/auth'
 
 import { useState, useEffect } from "react"
@@ -28,7 +28,6 @@ export const useAuthentication = () => {
 
     const [redirect, setRedirect] = useState()
 
-    console.log(redirect)
     // CLEAN UP PARA NAO TER ESCAPE DE MEMORIA DE INFORMAÇOES
     function checkIfisCancelled() {
         if (cancelled) {
@@ -55,7 +54,7 @@ export const useAuthentication = () => {
             })
 
             setMsg('Usuario criado com sucesso')
-
+            setRedirect(true)
         } catch (error) {
 
             console.log(error.message)
@@ -119,6 +118,9 @@ export const useAuthentication = () => {
             else if (error.message.includes('auth/missing-password')) {
                 systemErrorMessage = "senha incorreta!"
             }
+            else if (error.message.includes('auth/wrong-password')) {
+                systemErrorMessage = "senha incorreta!"
+            }
             else {
                 systemErrorMessage = "Ocorreu um erro, tente novamente mais tarde!"
             }
@@ -128,6 +130,17 @@ export const useAuthentication = () => {
 
         setLoading(false)
     }
+
+    // GOOGLE LOGAR
+
+const GoogleLogar = async () =>{
+    const provider = new GoogleAuthProvider();   
+        const result = await signInWithPopup(auth, provider);
+        setRedirect(true)
+        return result;
+      
+  
+}
 
 
     useEffect(() => {
@@ -142,6 +155,7 @@ export const useAuthentication = () => {
         login,
         redirect,
         msg,
-        logout
+        logout,
+        GoogleLogar,
     }
 }

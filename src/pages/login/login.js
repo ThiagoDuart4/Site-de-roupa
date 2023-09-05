@@ -18,7 +18,7 @@ const Login = () => {
 
   const navigate = useNavigate()
 
-  const {login, error: authError , loading,redirect} = useAuthentication()
+  const {login, error: authError , loading,redirect,GoogleLogar} = useAuthentication()
 
 
 
@@ -35,10 +35,19 @@ const Login = () => {
 
     const res = await login(user)
 
-    if(redirect === true){
+   }
+
+  //  LOGIN COM O GOOGLE
+
+   const actionGoogleLogin  =  async() =>{
+    GoogleLogar()
+   }
+   
+ useEffect(()=>{
+    if (redirect === true) {
       navigate("./home")
     }
-   }
+   },[redirect])
 
    useEffect(()=>{
     if(authError){
@@ -84,8 +93,8 @@ const Login = () => {
           <p>Não tem uma conta?<span><Link to ='/cadastrar'>Crie uma</Link></span></p>
           <p>Esqueci minha senha</p>
     <div className={style.SocialBtn}>
-    <button className={style.GoogleBtn}>
-           <FcGoogle  className={style.Gicon}/>
+    <button className={style.GoogleBtn} onClick={actionGoogleLogin}>
+           <FcGoogle  className={style.Gicon} />
             <h3>Continue com Google</h3>
           </button>
     </div>

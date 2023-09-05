@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, Link} from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link,Navigate} from "react-router-dom";
 import Login from './pages/login/login'
 import Home from './pages/Home/Home'
 import CreateLogin from './pages/CreateLogin/createLogin'
@@ -27,7 +27,7 @@ function App() {
     useEffect(()=> {
        onAuthStateChanged(auth,(user) =>{
         setUser(user)
-    
+        console.log(user)
        })
     },[auth])
 
@@ -44,7 +44,7 @@ if(loadingUser) {
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/cadastrar' element={<CreateLogin />} />
-        <Route path='/home' element={<Home />} />
+        <Route path='/home' element={user ? <Home /> : <Navigate to= "/"/> } />
       </Routes>
       </BrowserRouter>
     </AuthProvider>
