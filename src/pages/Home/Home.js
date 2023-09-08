@@ -9,7 +9,6 @@ const Home = () => {
   const navigate = useNavigate()
   const {user} = useAuthValue()
 
-
   const LogoutUser = () =>{
     logout()
 
@@ -19,6 +18,7 @@ const Home = () => {
     <div> 
       <h1> BEM VINDO(A): {user.displayName
 } </h1>
+
       <button onClick={LogoutUser}>SAIR</button>
     </div>
   )
