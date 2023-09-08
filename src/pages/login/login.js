@@ -44,7 +44,7 @@ const Login = () => {
    }
    
  useEffect(()=>{
-    if (redirect === true) {
+    if (redirect === 1) {
       navigate("./home")
     }
    },[redirect])

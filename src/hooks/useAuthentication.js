@@ -6,15 +6,18 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     updateProfile,
-    signOut, GoogleAuthProvider, signInWithPopup
+    signOut, GoogleAuthProvider, signInWithPopup,sendEmailVerification,emailVerified
 } from 'firebase/auth'
 
 import { useState, useEffect } from "react"
 
+import { useAuthValue } from "../Context/authContext"
+
 
 export const useAuthentication = () => {
 
- 
+  
+
 
     // TRATAMENTO DE ERROR ,LOADING e REDIRECIONAMENTO
     const [error, setError] = useState(null)
@@ -26,7 +29,7 @@ export const useAuthentication = () => {
 
     const auth = getAuth()
 
-    const [redirect, setRedirect] = useState()
+    const [redirect, setRedirect] = useState(0)
 
     // CLEAN UP PARA NAO TER ESCAPE DE MEMORIA DE INFORMAÇOES
     function checkIfisCancelled() {
@@ -42,19 +45,35 @@ export const useAuthentication = () => {
         setLoading(true)
         setError(null)
 
+        
         try {
             const { user } = await createUserWithEmailAndPassword(
                 auth,
                 data.email,
                 data.password
             )
+
+
+            await sendEmailVerification(user).then(()=>{
+                setMsg('Foi enviado um email de verificação para este email')
+            })
+            .catch((error)=>{
+                console.log('Erro ai enviar', error)
+            })
+
+          
+            
             // ATUALIZANDO NAME 
             await updateProfile(user, {
                 displayName: data.name
             })
 
-            setMsg('Usuario criado com sucesso')
-            setRedirect(true)
+            // ENVIANDO MEU USUARIO PARA O LOGIN  
+            setTimeout(function() {
+                setRedirect(2)
+              }, 3000);
+
+             
         } catch (error) {
 
             console.log(error.message)
@@ -76,8 +95,15 @@ export const useAuthentication = () => {
         }
 
         setLoading(false)
+
     }
-    // LOGOUT
+
+    
+  
+
+    // CONFIRMAÇÂO DE EMAIL
+  
+
 
     
   const logout = () => {
@@ -103,7 +129,7 @@ export const useAuthentication = () => {
                 data.senha
             )
             
-                 setRedirect(true)
+                 setRedirect(1)
                 
         } catch (error) {
 
@@ -136,16 +162,20 @@ export const useAuthentication = () => {
 const GoogleLogar = async () =>{
     const provider = new GoogleAuthProvider();   
         const result = await signInWithPopup(auth, provider);
-        setRedirect(true)
+        setRedirect(1)
         return result;
       
   
 }
 
 
+
+
     useEffect(() => {
         return () => setCancelled(true)
     }, [])
+
+
 
     return {
         auth,
@@ -157,5 +187,6 @@ const GoogleLogar = async () =>{
         msg,
         logout,
         GoogleLogar,
+        
     }
 }

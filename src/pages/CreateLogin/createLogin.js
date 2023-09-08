@@ -13,10 +13,14 @@ const CreateLogin = () => {
   const [ConfirmPassword,setConfirmPassword] = useState('')
  const [error,setError] = useState()
 
-  const {createUser, error: authError , loading,msg,redirect} = useAuthentication()
+  const {createUser , error: authError , loading,msg,redirect} = useAuthentication()
 
   const navigate = useNavigate()
 
+ 
+
+
+  
 const handleSubmit = async (e) =>{
  e.preventDefault()
  
@@ -35,19 +39,21 @@ const handleSubmit = async (e) =>{
  }
 
 
-  const res = await createUser(user)
+  const res = await createUser(user);
 
+ 
 }
+
+
 
 // REDIRENCIONANDO USUARIO APOS A CRIAÇÃO DO USUARIO
 
 
 useEffect(()=>{
-  if (redirect === true) {
-    navigate("/home")
+  if (redirect === 2) {
+    navigate("/")
   }
  },[redirect])
-
 
 
 useEffect(()=>{
@@ -95,12 +101,14 @@ useEffect(()=>{
                  onChange={(e) =>{setConfirmPassword(e.target.value)}} />
                 
               </label>
-
            {!loading &&   <input type="submit" value= "Enviar" />}
            {loading &&   <input type="submit" value= "Aguarde.." disable />}
               {error && <p>{error}</p>}
               {msg && <p>{msg}</p>}
             </form>
+
+            
+      
 </div>
          
         </section>
